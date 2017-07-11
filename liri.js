@@ -29,6 +29,26 @@ function tweets(){
 }
 
 //spotify-this-song command
+// var songName = process.argv[3];
+	//artist
+	//song name
+	//preview song link
+	//album the song is from
+
+var Spotify = require('node-spotify-api');
+ 
+var spotify = new Spotify({
+  id: 8cd3e07007294624ac4c8a420e70c9e0,
+  secret: dc40df49627045e9ba0214d2019bdbb1
+});
+ 
+spotify.search({ type: 'track', query: 'All the Small Things' }, function(err, data) {
+	if (err) {
+		return console.log('Error occurred: ' + err);
+	}
+	console.log(data); 
+});
+
 
 //movie-this command
 function movie() {
