@@ -7,6 +7,7 @@ switch(action){
 		tweets();
 		break;
 	case "spotify-this-song":
+		spotify();
 		break;
 	case "movie-this":
 		movie();
@@ -34,20 +35,37 @@ function tweets(){
 	//song name
 	//preview song link
 	//album the song is from
+function spotify(){
+	var Spotify = require('node-spotify-api');
+	 
+	var spotify = new Spotify({
+	  id: "8cd3e07007294624ac4c8a420e70c9e0",
+	  secret: "dc40df49627045e9ba0214d2019bdbb1"
+	});
 
-var Spotify = require('node-spotify-api');
- 
-var spotify = new Spotify({
-  id: 8cd3e07007294624ac4c8a420e70c9e0,
-  secret: dc40df49627045e9ba0214d2019bdbb1
-});
- 
-spotify.search({ type: 'track', query: 'All the Small Things' }, function(err, data) {
-	if (err) {
-		return console.log('Error occurred: ' + err);
+	var track = process.argv[3];
+	
+	if (track === ""){
+		spotify.search({ type: 'track', query: 'The Sign' }, function(error, data) {
+			if (error) {
+				return console.log('Error occurred: ' + error);
+			}
+			else{
+				console.log(data);
+			}
+		})
 	}
-	console.log(data); 
-});
+	else {
+		spotify.search({ type: 'track', query: track }, function(error, data) {
+			if (error) {
+				return console.log('Error occurred: ' + error);
+			}
+			else{
+				console.log(data);
+			}
+		})
+	}
+}
 
 
 //movie-this command
@@ -59,14 +77,16 @@ function movie() {
 	//Store movie name in empty var
 	var movieName = "";
 
-	//Loop through the words in the node argument to define global var movieName
-	for(var i = 2; i < nodeArgs.length; i++){
-		if (i > 2 && i < nodeArgs.length){
+	//Loop through the words in the node argument to define var movieName
+	for(var i = 3; i < nodeArgs.length; i++){
+		if (i > 3 && i < nodeArgs.length){
 			//Add plus signs between multiple words 
-			movieName = movieName + "+" + nodeArgs[i]
+			movieName = movieName + "+" + nodeArgs[i];
+			console.log("Movie chosen with concatination: "+movieName);
 		}
 		else{
 			movieName += nodeArgs[i];
+			console.log("Movie chosen: "+movieName);
 		}
 	}
 
@@ -89,7 +109,7 @@ function random(){
 		}
 		else{
 			console.log(data);
-			return data;
+			spotify();
 		}
 	})
 }
