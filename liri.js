@@ -1,4 +1,5 @@
 var fs = require("fs");
+var request = require("request");
 var action = process.argv[2];
 var keys = "";
 
@@ -70,8 +71,6 @@ function spotify(){
 
 //movie-this command
 function movie() {
-	//Request npm package after it has been installed
-	var request = require("request");
 	//Store arguments in an array
 	var nodeArgs = process.argv
 	//Store movie name in empty var
