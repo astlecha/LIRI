@@ -20,14 +20,23 @@ switch(action){
 
 //my-tweets command
 function tweets(){
-	fs.readFile("keys.js", "utf8", function(error, data){
-		if(error){
-			console.log(error);
-		}
-		else{
-			keys = data;
-		}
-	})
+	var Twitter = require('twitter');
+
+	var client = new Twitter({
+	  consumer_key: '5CdYfwF59SlG2zzV4HX8DX1Pb',
+	  consumer_secret: 'Qaq9GGMvnO5m3Z0i98Qr6RG4UxClNEjLdME2EJNM2h5xRaPbgC',
+	  access_token_key: '505025396-0yNVPF2AdAf09LrYkDgypCzHllfNl0JFAUp8CAGn',
+	  access_token_secret: 'fmFi3BJKmFLwjXaY727efEB1I1c7th1Az6kbNnkw23Qjx'
+	});
+
+	var params = {screen_name: 'nodejs'};
+	client.get('statuses/user_timeline', params, function(error, tweets, response) {
+	  if (!error) {
+	  	for(var i=0; i<20; i++){
+	  		console.log("\n-------\n"+tweets[i].text+"\n-------");
+	  	}
+	  }
+	});
 }
 
 //spotify-this-song command
@@ -84,7 +93,7 @@ function spotify(){
 //movie-this command
 function movie() {
 	//Store arguments in an array
-	var movieArr = process.argv
+	var movieArr = process.argv;
 
 	//Store movie name in empty array
 	var tempArr = [];
@@ -94,6 +103,7 @@ function movie() {
 			tempArr.push(movieArr[i]);
 	}
 
+	//Concatinates movie name with multiple words
 	var movieName = tempArr.join("+");
 
 	//Define the OMDB Query URL
