@@ -44,25 +44,35 @@ function spotify(){
 	  secret: "dc40df49627045e9ba0214d2019bdbb1"
 	});
 
-	var track = process.argv[3];
+	var trackArr = process.argv;
+	var tempArr = [];
+
+	for(var i = 3; i<trackArr.length; i++){
+		// track = trackArr[i];
+		tempArr.push(trackArr[i])
+	}
 	
-	if (track === ""){
+	var result = tempArr.join("+");
+	
+
+	if (result === ""){
 		spotify.search({ type: 'track', query: 'The Sign' }, function(error, data) {
 			if (error) {
 				return console.log('Error occurred: ' + error);
 			}
 			else{
-				console.log(data);
+				// console.log(data);
 			}
 		})
 	}
 	else {
-		spotify.search({ type: 'track', query: track }, function(error, data) {
+		spotify.search({ type: 'track', query: result }, function(error, data) {
 			if (error) {
 				return console.log('Error occurred: ' + error);
 			}
 			else{
-				console.log(data);
+				// console.log(data);
+				console.log(data.tracks.items[0].href);
 			}
 		})
 	}
