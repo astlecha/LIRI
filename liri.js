@@ -31,11 +31,6 @@ function tweets(){
 }
 
 //spotify-this-song command
-// var songName = process.argv[3];
-	//artist
-	//song name
-	//preview song link
-	//album the song is from
 function spotify(){
 	var Spotify = require('node-spotify-api');
 	 
@@ -47,14 +42,15 @@ function spotify(){
 	var trackArr = process.argv;
 	var tempArr = [];
 
+	//Pushes user's song into temporary array
 	for(var i = 3; i<trackArr.length; i++){
-		// track = trackArr[i];
-		tempArr.push(trackArr[i])
+		tempArr.push(trackArr[i]);
 	}
 	
+	//Concatinates title words from temporary array
 	var result = tempArr.join("+");
 	
-
+	//If user doesn't give a song title, default to "The Sign"
 	if (result === ""){
 		spotify.search({ type: 'track', query: 'The Sign' }, function(error, data) {
 			if (error) {
@@ -68,6 +64,7 @@ function spotify(){
 			}
 		})
 	}
+	//If user gives a song title, log its title, artist, album, and preview link
 	else {
 		spotify.search({ type: 'track', query: result }, function(error, data) {
 			if (error) {
@@ -87,22 +84,17 @@ function spotify(){
 //movie-this command
 function movie() {
 	//Store arguments in an array
-	var nodeArgs = process.argv
-	//Store movie name in empty var
-	var movieName = "";
+	var movieArr = process.argv
 
-	//Loop through the words in the node argument to define var movieName
-	for(var i = 3; i < nodeArgs.length; i++){
-		if (i > 3 && i < nodeArgs.length){
-			//Add plus signs between multiple words 
-			movieName = movieName + "+" + nodeArgs[i];
-			console.log("Movie chosen with concatination: "+movieName);
-		}
-		else{
-			movieName += nodeArgs[i];
-			console.log("Movie chosen: "+movieName);
-		}
+	//Store movie name in empty array
+	var tempArr = [];
+
+	//Pushes user's movie into temporary array
+	for(var i = 3; i < movieArr.length; i++){
+			tempArr.push(movieArr[i]);
 	}
+
+	var movieName = tempArr.join("+");
 
 	//Define the OMDB Query URL
 	var queryUrl = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=40e9cece";
