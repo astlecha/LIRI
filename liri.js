@@ -61,7 +61,10 @@ function spotify(){
 				return console.log('Error occurred: ' + error);
 			}
 			else{
-				// console.log(data);
+				console.log("Song: "+data.tracks.items[0].name);
+				console.log("Artist: "+data.tracks.items[0].artists[0].name);
+				console.log("Album: "+data.tracks.items[0].album.name);
+				console.log("Link: "+data.tracks.items[0].preview_url);
 			}
 		})
 	}
@@ -71,8 +74,10 @@ function spotify(){
 				return console.log('Error occurred: ' + error);
 			}
 			else{
-				// console.log(data);
-				console.log(data.tracks.items[0].href);
+				console.log("Song: "+data.tracks.items[0].name);
+				console.log("Artist: "+data.tracks.items[0].artists[0].name);
+				console.log("Album: "+data.tracks.items[0].album.name);
+				console.log("Link: "+data.tracks.items[0].preview_url);
 			}
 		})
 	}
