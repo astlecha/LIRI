@@ -3,6 +3,22 @@ var request = require("request");
 var action = process.argv[2];
 var keys = "";
 
+//Setting up Spotify call
+var Spotify = require('node-spotify-api');
+var spotify = new Spotify({
+  id: "8cd3e07007294624ac4c8a420e70c9e0",
+  secret: "dc40df49627045e9ba0214d2019bdbb1"
+});
+
+//Setting up Twitter call
+var Twitter = require('twitter');
+var client = new Twitter({
+  consumer_key: '5CdYfwF59SlG2zzV4HX8DX1Pb',
+  consumer_secret: 'Qaq9GGMvnO5m3Z0i98Qr6RG4UxClNEjLdME2EJNM2h5xRaPbgC',
+  access_token_key: '505025396-0yNVPF2AdAf09LrYkDgypCzHllfNl0JFAUp8CAGn',
+  access_token_secret: 'fmFi3BJKmFLwjXaY727efEB1I1c7th1Az6kbNnkw23Qjx'
+});
+
 switch(action){
 	case "my-tweets":
 		tweets();
@@ -20,15 +36,6 @@ switch(action){
 
 //my-tweets command
 function tweets(){
-	var Twitter = require('twitter');
-
-	//Define client as new Twitter constructor object
-	var client = new Twitter({
-	  consumer_key: '5CdYfwF59SlG2zzV4HX8DX1Pb',
-	  consumer_secret: 'Qaq9GGMvnO5m3Z0i98Qr6RG4UxClNEjLdME2EJNM2h5xRaPbgC',
-	  access_token_key: '505025396-0yNVPF2AdAf09LrYkDgypCzHllfNl0JFAUp8CAGn',
-	  access_token_secret: 'fmFi3BJKmFLwjXaY727efEB1I1c7th1Az6kbNnkw23Qjx'
-	});
 
 	//Define screen name parameter
 	var params = {screen_name: 'KarlTheFog'};
@@ -46,13 +53,6 @@ function tweets(){
 
 //spotify-this-song command
 function spotify(){
-	var Spotify = require('node-spotify-api');
-	 
-	var spotify = new Spotify({
-	  id: "8cd3e07007294624ac4c8a420e70c9e0",
-	  secret: "dc40df49627045e9ba0214d2019bdbb1"
-	});
-
 	var trackArr = process.argv;
 	var tempArr = [];
 
@@ -144,7 +144,23 @@ function random(){
 		}
 		else{
 			console.log(data);
-			spotify();
+
+			var dataArr = data.split(",");
+			// console.log(dataArr);
+			var dataSlice = dataArr[1].slice(1, -1);
+			// console.log(dataSlice);
+
+			spotify.search({ type: 'track', query: dataSlice }, function(error, data){
+				if (error) {
+					return console.log('Error occurred: ' + error);
+				}
+				else{
+					console.log("Song: " + data.tracks.items[0].name);
+					console.log("Artist: " + data.tracks.items[0].artists[0].name);
+					console.log("Album: " + data.tracks.items[0].album.name);
+					console.log("Link: " + data.tracks.items[0].preview_url);
+				}
+			});
 		}
 	})
-}
+};
