@@ -22,6 +22,7 @@ switch(action){
 function tweets(){
 	var Twitter = require('twitter');
 
+	//Define client as new Twitter constructor object
 	var client = new Twitter({
 	  consumer_key: '5CdYfwF59SlG2zzV4HX8DX1Pb',
 	  consumer_secret: 'Qaq9GGMvnO5m3Z0i98Qr6RG4UxClNEjLdME2EJNM2h5xRaPbgC',
@@ -29,10 +30,11 @@ function tweets(){
 	  access_token_secret: 'fmFi3BJKmFLwjXaY727efEB1I1c7th1Az6kbNnkw23Qjx'
 	});
 
+	//Define screen name parameter
 	var params = {screen_name: 'KarlTheFog'};
 
 	client.get('statuses/user_timeline', params, function(error, tweets, response) {
-		//Log 20 tweets from @KarlTheFog if there's no error
+		//Log 20 most recent tweets from @KarlTheFog if there's no error
 	  	if (!error) {
 		  	for(var i=0; i<20; i++){
 		  		console.log("\n-------\n" + tweets[i].text + 
@@ -63,7 +65,7 @@ function spotify(){
 	var result = tempArr.join("+");
 	
 	//If user doesn't give a song title, default to "The Sign"
-	if (result === ""){
+	if (result === ''){
 		spotify.search({ type: 'track', query: 'The Sign' }, function(error, data) {
 			if (error) {
 				return console.log('Error occurred: ' + error);
@@ -107,15 +109,28 @@ function movie() {
 	}
 
 	//Concatinates movie name with multiple words
-	var movieName = tempArr.join("+");
+	var movieName = tempArr.join('+');
 
 	//Define the OMDB Query URL
 	var queryUrl = "http://www.omdbapi.com/?t=" + movieName + "&y=&plot=short&apikey=40e9cece";
 
 	request(queryUrl, function(error, response, body) {
 		//If there's no error and the response code is 200, log the movie info
-		if (!error && response.statusCode===200){
-			console.log(JSON.parse(body));
+		if(!error && response.statusCode===200){
+			console.log(body);
+			// console.log(
+			// 	'Title: ' + body.Title +
+			// 	'\nYear: ' + body.Year + 
+			// 	'\nIMDB Rating: ' + body.imdbRating + 
+			// 	'\nRotten Tomatoes Rating: ' + body.Ratings.Source['Rotten Tomatoes'] +
+			// 	'\nCountry of Origin: ' + body.Country +
+			// 	'\nLanguage: ' + body.Language +
+			// 	'\nPlot: ' + body.Plot +
+			// 	'\nActors: ' + body.Actors
+			// );
+		}
+		else{
+			console.log(error);
 		}
 	})
 }
