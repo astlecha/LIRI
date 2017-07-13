@@ -37,8 +37,8 @@ function tweets(){
 		//Log 20 most recent tweets from @KarlTheFog if there's no error
 	  	if (!error) {
 		  	for(var i=0; i<20; i++){
-		  		console.log("\n-------\n" + tweets[i].text + 
-		  			"\n\nPosted on: " + tweets[i].created_at + "\n-------");
+		  		console.log("\nTweet #"+(i+1)+"-------\n" + tweets[i].text + 
+		  			"\n\nPosted on: " + tweets[i].created_at + "\n");
 		  	}
 		}
 	});
@@ -117,17 +117,18 @@ function movie() {
 	request(queryUrl, function(error, response, body) {
 		//If there's no error and the response code is 200, log the movie info
 		if(!error && response.statusCode===200){
-			console.log(body);
-			// console.log(
-			// 	'Title: ' + body.Title +
-			// 	'\nYear: ' + body.Year + 
-			// 	'\nIMDB Rating: ' + body.imdbRating + 
-			// 	'\nRotten Tomatoes Rating: ' + body.Ratings.Source['Rotten Tomatoes'] +
-			// 	'\nCountry of Origin: ' + body.Country +
-			// 	'\nLanguage: ' + body.Language +
-			// 	'\nPlot: ' + body.Plot +
-			// 	'\nActors: ' + body.Actors
-			// );
+			var results = JSON.parse(body);
+			// console.log(results.Title);
+			console.log(
+				'Title: ' + results.Title +
+				'\nYear: ' + results.Year + 
+				'\nIMDB Rating: ' + results.imdbRating + 
+				'\nRotten Tomatoes Rating: ' + results.Ratings[1].Value +
+				'\nCountry of Origin: ' + results.Country +
+				'\nLanguage: ' + results.Language +
+				'\nPlot: ' + results.Plot +
+				'\nActors: ' + results.Actors
+				);
 		}
 		else{
 			console.log(error);
