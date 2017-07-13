@@ -29,11 +29,13 @@ function tweets(){
 	  access_token_secret: 'fmFi3BJKmFLwjXaY727efEB1I1c7th1Az6kbNnkw23Qjx'
 	});
 
-	var params = {screen_name: 'nodejs'};
+	var params = {screen_name: 'KarlTheFog'};
+
 	client.get('statuses/user_timeline', params, function(error, tweets, response) {
 	  if (!error) {
 	  	for(var i=0; i<20; i++){
-	  		console.log("\n-------\n"+tweets[i].text+"\n-------");
+	  		console.log("\n-------\n" + tweets[i].text + 
+	  			"\n\nPosted on: " + tweets[i].created_at + "\n-------");
 	  	}
 	  }
 	});
