@@ -32,12 +32,13 @@ function tweets(){
 	var params = {screen_name: 'KarlTheFog'};
 
 	client.get('statuses/user_timeline', params, function(error, tweets, response) {
-	  if (!error) {
-	  	for(var i=0; i<20; i++){
-	  		console.log("\n-------\n" + tweets[i].text + 
-	  			"\n\nPosted on: " + tweets[i].created_at + "\n-------");
-	  	}
-	  }
+		//Log 20 tweets from @KarlTheFog if there's no error
+	  	if (!error) {
+		  	for(var i=0; i<20; i++){
+		  		console.log("\n-------\n" + tweets[i].text + 
+		  			"\n\nPosted on: " + tweets[i].created_at + "\n-------");
+		  	}
+		}
 	});
 }
 
