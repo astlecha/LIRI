@@ -85,10 +85,12 @@ function spotify(){
 				return console.log('Error occurred: ' + error);
 			}
 			else{
-				console.log("Song: "+data.tracks.items[0].name);
-				console.log("Artist: "+data.tracks.items[0].artists[0].name);
-				console.log("Album: "+data.tracks.items[0].album.name);
-				console.log("Link: "+data.tracks.items[0].preview_url);
+				var displayResults = "Song: " + data.tracks.items[0].name + 
+					"\nArtist: "+data.tracks.items[0].artists[0].name +
+					"\nAlbum: "+data.tracks.items[0].album.name +
+					"\nLink: "+data.tracks.items[0].preview_url;
+				console.log(displayResults);
+				fs.appendFile('log.txt', '--------\nUser entered "spotify-this-song" '+result+' and logged:\n'+displayResults);
 			}
 		})
 	}
@@ -118,17 +120,17 @@ function movie() {
 		//If there's no error and the response code is 200, log the movie info
 		if(!error && response.statusCode===200){
 			var results = JSON.parse(body);
-			// console.log(results.Title);
-			console.log(
-				'Title: ' + results.Title +
+			var displayResults = 'Title: ' + results.Title +
 				'\nYear: ' + results.Year + 
 				'\nIMDB Rating: ' + results.imdbRating + 
 				'\nRotten Tomatoes Rating: ' + results.Ratings[1].Value +
 				'\nCountry of Origin: ' + results.Country +
 				'\nLanguage: ' + results.Language +
 				'\nPlot: ' + results.Plot +
-				'\nActors: ' + results.Actors
-				);
+				'\nActors: ' + results.Actors;
+
+			console.log(displayResults);
+			fs.appendFile('log.txt', '--------\nUser entered "movie-this" '+movieName+' and logged:\n'+displayResults);
 		}
 		else{
 			console.log(error);
@@ -163,4 +165,5 @@ function random(){
 			});
 		}
 	})
+	fs.appendFile('log.txt', '--------\nUser entered "do-what-it-says"\n');
 };
