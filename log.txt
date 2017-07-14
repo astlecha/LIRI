@@ -1,9 +1,1 @@
-User entered "do-what-it-says"
-User entered "movie-this" cinderella and logged: Title: Cinderella
-Year: 2015
-IMDB Rating: 7.0
-Rotten Tomatoes Rating: 83%
-Country of Origin: USA, UK
-Language: English
-Plot: When her father unexpectedly passes away, young Ella finds herself at the mercy of her cruel stepmother and her scheming step-sisters. Never one to give up hope, Ella's fortunes begin to change after meeting a dashing stranger.
-Actors: Cate Blanchett, Lily James, Richard Madden, Helena Bonham Carter
+~~~~~~~~~~~~~~~~~~~USER SEARCH HISTORY~~~~~~~~~~~~~~~~~~~~~~~

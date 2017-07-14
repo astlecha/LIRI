@@ -3,13 +3,6 @@ var request = require("request");
 var action = process.argv[2];
 var keys = "";
 
-//Setting up Spotify call
-var Spotify = require('node-spotify-api');
-var spotify = new Spotify({
-  id: "8cd3e07007294624ac4c8a420e70c9e0",
-  secret: "dc40df49627045e9ba0214d2019bdbb1"
-});
-
 //Setting up Twitter call
 var Twitter = require('twitter');
 var client = new Twitter({
@@ -47,12 +40,21 @@ function tweets(){
 		  		console.log("\nTweet #"+(i+1)+"-------\n" + tweets[i].text + 
 		  			"\n\nPosted on: " + tweets[i].created_at + "\n");
 		  	}
+		  	fs.appendFile('log.txt', '\n--------\nUser entered "my-tweets"');
 		}
 	});
 }
 
 //spotify-this-song command
 function spotify(){
+	//Setting up Spotify call
+	var Spotify = require('node-spotify-api');
+
+	var spotify = new Spotify({
+	  id: "8cd3e07007294624ac4c8a420e70c9e0",
+	  secret: "dc40df49627045e9ba0214d2019bdbb1"
+	});
+
 	var trackArr = process.argv;
 	var tempArr = [];
 
@@ -63,6 +65,7 @@ function spotify(){
 	
 	//Concatinates title words from temporary array
 	var result = tempArr.join("+");
+					
 	
 	//If user doesn't give a song title, default to "The Sign"
 	if (result === ''){
@@ -71,10 +74,10 @@ function spotify(){
 				return console.log('Error occurred: ' + error);
 			}
 			else{
-				console.log("Song: "+data.tracks.items[0].name);
-				console.log("Artist: "+data.tracks.items[0].artists[0].name);
-				console.log("Album: "+data.tracks.items[0].album.name);
-				console.log("Link: "+data.tracks.items[0].preview_url);
+				console.log("Song: " + data.tracks.items[0].name + 
+					"\nArtist: "+data.tracks.items[0].artists[0].name +
+					"\nAlbum: "+data.tracks.items[0].album.name +
+					"\nLink: "+data.tracks.items[0].preview_url);
 			}
 		})
 	}
@@ -85,12 +88,15 @@ function spotify(){
 				return console.log('Error occurred: ' + error);
 			}
 			else{
-				var displayResults = "Song: " + data.tracks.items[0].name + 
+				console.log("Song: " + data.tracks.items[0].name + 
 					"\nArtist: "+data.tracks.items[0].artists[0].name +
 					"\nAlbum: "+data.tracks.items[0].album.name +
-					"\nLink: "+data.tracks.items[0].preview_url;
-				console.log(displayResults);
-				fs.appendFile('log.txt', '--------\nUser entered "spotify-this-song" '+result+' and logged:\n'+displayResults);
+					"\nLink: "+data.tracks.items[0].preview_url);
+				fs.appendFile('log.txt', '\n--------\nUser entered "spotify-this-song" '+result+' and logged:\n'+
+					"Song: " + data.tracks.items[0].name + 
+					"\nArtist: "+data.tracks.items[0].artists[0].name +
+					"\nAlbum: "+data.tracks.items[0].album.name +
+					"\nLink: "+data.tracks.items[0].preview_url);
 			}
 		})
 	}
@@ -130,7 +136,7 @@ function movie() {
 				'\nActors: ' + results.Actors;
 
 			console.log(displayResults);
-			fs.appendFile('log.txt', '--------\nUser entered "movie-this" '+movieName+' and logged:\n'+displayResults);
+			fs.appendFile('log.txt', '\n--------\nUser entered "movie-this" '+movieName+' and logged:\n'+displayResults);
 		}
 		else{
 			console.log(error);
@@ -140,6 +146,12 @@ function movie() {
 
 //do-what-it-says command (aka random.txt)
 function random(){
+	var Spotify = require('node-spotify-api');
+
+	var spotify = new Spotify({
+	  id: "8cd3e07007294624ac4c8a420e70c9e0",
+	  secret: "dc40df49627045e9ba0214d2019bdbb1"
+	});
 	fs.readFile("random.txt", "utf8", function(error, data){
 		if(error){
 			console.log(error);
@@ -165,5 +177,5 @@ function random(){
 			});
 		}
 	})
-	fs.appendFile('log.txt', '--------\nUser entered "do-what-it-says"\n');
+	fs.appendFile('log.txt', '\n--------\nUser entered "do-what-it-says"\n');
 };
